@@ -20,7 +20,6 @@ provider "aws" {
   endpoints {
     s3  = "http://localhost:4566"
     ec2 = "http://localhost:4566"
-    vpc = "http://localhost:4566"
   }
 }
 
