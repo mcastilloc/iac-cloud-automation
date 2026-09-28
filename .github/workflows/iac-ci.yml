@@ -19,6 +19,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.8.5"
+          terraform_wrapper: false
 
       - name: Verificar Formato (terraform fmt)
         run: terraform fmt -check -recursive
