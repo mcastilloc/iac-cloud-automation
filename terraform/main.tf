@@ -106,7 +106,7 @@ resource "aws_instance" "sre_web_server" {
   subnet_id              = aws_subnet.sre_subnet.id
   vpc_security_group_ids = [aws_security_group.sre_sg.id]
 
-  user_data_base64            = base64encode(<<-EOF
+  user_data_base64 = base64encode(<<-EOF
                                 #!/bin/bash
                                 echo "=== Starting SRE Lab Web Server Deployment ==="
                                 yum update -y
