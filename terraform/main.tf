@@ -106,16 +106,18 @@ resource "aws_instance" "sre_web_server" {
   subnet_id              = aws_subnet.sre_subnet.id
   vpc_security_group_ids = [aws_security_group.sre_sg.id]
 
-  user_data = <<-EOF
-              #!/bin/bash
-              echo "=== Starting SRE Lab Web Server Deployment ==="
-              yum update -y
-              yum install -y nginx
-              systemctl enable nginx
-              systemctl start nginx
-              echo "<h1>SRE/DevOps Lab - LocalStack & Terraform Stack</h1><p>Environment: Dev | Server: Active</p>" > /usr/share/nginx/html/index.html
-              echo "=== Web Server Configuration Completed ==="
-              EOF
+  user_data_base64            = base64encode(<<-EOF
+                                #!/bin/bash
+                                echo "=== Starting SRE Lab Web Server Deployment ==="
+                                yum update -y
+                                yum install -y nginx
+                                systemctl enable nginx
+                                systemctl start nginx
+                                echo "<h1>SRE/DevOps Lab - LocalStack & Terraform Stack</h1><p>Environment: Dev | Server: Active</p>" > /usr/share/nginx/html/index.html
+                                echo "=== Web Server Configuration Completed ==="
+                                EOF
+  )
+  user_data_replace_on_change = true
 
   tags = {
     Name        = "sre-web-server"
