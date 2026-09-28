@@ -98,13 +98,24 @@ resource "aws_security_group" "sre_sg" {
 }
 
 # ------------------------------------------------------------------------------
-# Instancia EC2 Simulada
+# Instancia EC2 Simulada con UserData (Servidor Web)
 # ------------------------------------------------------------------------------
 resource "aws_instance" "sre_web_server" {
   ami                    = "ami-0c55b159cbfafe1f0"
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.sre_subnet.id
   vpc_security_group_ids = [aws_security_group.sre_sg.id]
+
+  user_data = <<-EOF
+              #!/bin/bash
+              echo "=== Starting SRE Lab Web Server Deployment ==="
+              yum update -y
+              yum install -y nginx
+              systemctl enable nginx
+              systemctl start nginx
+              echo "<h1>SRE/DevOps Lab - LocalStack & Terraform Stack</h1><p>Environment: Dev | Server: Active</p>" > /usr/share/nginx/html/index.html
+              echo "=== Web Server Configuration Completed ==="
+              EOF
 
   tags = {
     Name        = "sre-web-server"
