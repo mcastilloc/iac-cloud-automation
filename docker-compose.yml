@@ -1,14 +1,12 @@
-version: '3.8'
-
 services:
   localstack:
     container_name: "localstack-main"
     image: localstack/localstack:latest
     ports:
-      - "127.0.0.1:4566:4566"            # LocalStack Gateway
-      - "127.0.0.1:4510-4559:4510-4559"  # Puertos de servicios
+      - "4566:4566"
+      - "4510-4559:4510-4559"
     environment:
-      - SERVICES=s3,ec2,vpc
+      - SERVICES=s3,ec2
       - DEBUG=1
       - DOCKER_HOST=unix:///var/run/docker.sock
     volumes:
