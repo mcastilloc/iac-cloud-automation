@@ -23,7 +23,7 @@ ec2 = "http://localhost:4566"
 }
 }
 
---- Almacenamiento S3 ---
+Almacenamiento S3
 
 resource "aws_s3_bucket" "sre_backups" {
 bucket = "sre-system-backups-local"
@@ -34,7 +34,7 @@ Environment = "Dev"
 }
 }
 
---- Red (VPC & Subnet) ---
+Red (VPC & Subnet)
 
 resource "aws_vpc" "sre_vpc" {
 cidr_block           = "10.0.0.0/16"
@@ -59,7 +59,7 @@ Environment = "Dev"
 }
 }
 
---- Seguridad (Security Group) ---
+Seguridad (Security Group)
 
 resource "aws_security_group" "sre_sg" {
 name        = "sre-lab-web-sg"
@@ -96,10 +96,10 @@ Environment = "Dev"
 }
 }
 
---- Cómputo (Instancia EC2) ---
+Cómputo (Instancia EC2)
 
 resource "aws_instance" "sre_web_server" {
-ami                    = "ami-0c55b159cbfafe1f0" # Mock AMI para LocalStack
+ami                    = "ami-0c55b159cbfafe1f0"
 instance_type          = "t2.micro"
 subnet_id              = aws_subnet.sre_subnet.id
 vpc_security_group_ids = [aws_security_group.sre_sg.id]
